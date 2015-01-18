@@ -1,4 +1,4 @@
-<%= page_header(@obj) %>
+<%= page_header(@obj,@header) %>
 <% ns=get_namespace() %>
 <%if ns.nil?%>
   <%= semantic_bootstrap_nested_form_for @obj do |f| %>

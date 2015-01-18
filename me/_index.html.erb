@@ -1,8 +1,21 @@
-<%= page_header() %>
-<%= search_area() %>
+<%= page_header(nil,@header) %>
+<%= search_area(@searchable_columns) %>
 <%= page_link(@objs) %>
+<div ng-app="app" ng-controller='indexController' ng-init="initialize('<%= @objs.map{|x|x.id} %>')">
+<div ng-if="ids.length<1" >
+  <%= link_to_url(tt('select_for_actions'),'#') if @checkbox%>
+</div>
+<div ng-if="ids.length>0" >
+  <% (@checkbox||[]).each do |link|%> 
+  <a class="btn btn-primary" ng-click="<%=link[:call]%>">
+  <%=tt(link[:label])%></a>
+  <% end %>
+</div>
 <table class="table table-striped table-bordered table-condensed">
 <thead><tr>
+   <%if @checkbox %> 
+   <td><input type='checkbox' ng-click='click_all()' ng-model='selectAll'></td> 
+   <%end %> 
 <% columns.each_with_index do |col,index| %>
   <th>
   <%= sort_col(sort_direction, sort_column, col,captions[index]) %>
@@ -13,8 +26,11 @@
 
 <tbody>
 <% if objs.size > 0 %>
+
   <% for obj in objs %>  
     <tr>
+      <%if @checkbox %>     
+      <td><input type='checkbox' checklist-value='<%= obj.id %>' checklist-model="ids" '></td><%end %>    
   		<% columns.each_with_index do |col,index| %>   
         <% value =get_attr(obj,col) %>
 	 			<% if 0 == index %>
@@ -30,5 +46,4 @@
     <tr><td colspan='10'><%= tt('empty') %></td></tr>
 <% end %>
 </tbody></table>
-<%#= debug columns %>
-<%#= debug captions %>
+</div><%#=ng-app="app" %>
