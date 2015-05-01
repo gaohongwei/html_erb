@@ -14,14 +14,16 @@
 <table class="table table-striped table-bordered table-condensed">
 <thead><tr>
    <%if @checkbox %> 
-   <td><input type='checkbox' ng-click='click_all()' ng-model='selectAll'></td> 
+   <td><input type='checkbox' ng-click='check_all()'></td> 
    <%end %> 
 <% columns.each_with_index do |col,index| %>
   <th>
   <%= sort_col(sort_direction, sort_column, col,captions[index]) %>
   </th>     
 <% end %>
-<th width='140px'><a href='#'><%= tt('actions') %></a></th>
+<% if @act_links %>
+<th width='140px'><%= tt('status') %></th>
+<% end %>
 </tr></thead>
 
 <tbody>
@@ -30,16 +32,27 @@
   <% for obj in objs %>  
     <tr>
       <%if @checkbox %>     
-      <td><input type='checkbox' checklist-value='<%= obj.id %>' checklist-model="ids" '></td><%end %>    
+      <td><input type="checkbox" checklist-model="ids" checklist-value="<%=obj.id%>"></td><%end %>   
+
   		<% columns.each_with_index do |col,index| %>   
         <% value =get_attr(obj,col) %>
-	 			<% if 0 == index %>
-	      	<td><%= link_to_ns value, obj %></td>
-				<% else %>  
-	      	<td><%= value %></td>
-				<% end %>
+        <td>
+        <% if value.is_a?(Hash) %>
+          <%= link_to_ns value[:label], value[:url] %>
+        <% else %>          
+  	 			<% if 0 == index %>
+  	      	<%= link_to_ns value, obj %>
+  				<% else %>  
+  	      	<%= value %>
+  				<% end %>
+        <% end %>          
+        </td>
 			<% end %>  
-      <td><%= edit_delete(obj.id) %></td>  			 				 	
+      <% if @act_links %>
+      <td><%= link_to_label_url(@act_links[obj.id]) %></td> 
+      <% else %>            
+      <!--td><%= edit_delete(obj.id) %></td-->  
+      <% end %>       			 				 	
     </tr>
   <% end %>
 <% else %>

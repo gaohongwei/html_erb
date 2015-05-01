@@ -1,0 +1,5 @@
+<% ApplicationHelper::LOGINS.each do|login| %>
+  <% provider,url=login[:id],login[:url] %>
+  <% label=login[:id]+tt('login') %>
+  <%= link_to(login_png_tag(provider,label),url) %>&nbsp;&nbsp;
+<% end %>

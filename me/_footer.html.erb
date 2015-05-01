@@ -1,3 +1,5 @@
+<%= render 'shared/share_to' %>
 <strong><%=tt('contact_us')%></strong>
-<%= mail_to "gaohongwei@gmail.com",tt('email')+'gaohongwei@gmail.com' %>
-   <span><%= tt('wechat') %>gaohong-wei</span>
+<%= mail_to "gaohongwei@gmail.com",tt('email')+':gaohongwei@gmail.com' %>
+   <span><%= tt('wechat') %>:gaohong-wei</span>
+<%= render 'shared/track_me' %>

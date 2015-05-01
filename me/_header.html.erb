@@ -1,0 +1,37 @@
+<div class="row">&nbsp</div>
+<div class="row">
+<div class="col-md-1"></div>
+<div class="col-md-2">
+  <div class="row">
+    <div class="col-md-2">
+    <%= image_tag("pages/logo.png", :alt =>tt('app_name')) %>
+    </div>
+    <div class="col-md-10">
+    <%= tt('logo1') %></br>
+    <%= tt('logo2') %>
+    </div>
+  </div>
+</div> 
+<% if user_signed_in? %> 
+  <div class="col-md-8">
+    <div class="row pull-right">
+      <% vname =current_user.vname %>      
+      <% if cookies[:provider] %>
+        <%= get_image_tag(cookies[:provider],vname) %>:       
+      <% end %>         
+      <%= link_to(vname,'#')%>
+      <% vname2 ="current_user.provider" if current_user.provider %>     
+      <%= button_to(tt('logout'), destroy_user_session_path, :method => :delete) %> 
+      <%= render 'shared/locale' %>          
+    </div>
+  </div>
+<% else %>
+  <div class="col-md-8">
+    <div class="row pull-right">
+    <%= render "shared/logins_all" %>
+    <%= render 'shared/locale' %>    
+    </div>
+  </div>
+<% end %>
+<div class="col-md-1"></div>
+</div>

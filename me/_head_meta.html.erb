@@ -1,0 +1,15 @@
+<title><%= @seo['browser:title'] %></title>
+<html itemscope itemtype="http://schema.org/Review">
+
+<% (@seo||{}).each do|name,content| %>
+<meta name='<%=name%>' content='<%=content%>'>
+<% end %>
+
+
+
+<meta name='twitter:card'    content='summary'> 
+<meta name='twitter:site'    content='<%=@seo["og:site"]%>'> 
+<meta name='twitter:creator' content='<%=@seo["og:site"]%>'> 
+<meta name='twitter:title'   content='<%=@seo["og:title"]%>'> 
+<meta name='twitter:image'   content='<%=@seo["og:image"]%>'>
+<meta name='twitter:description' content='<%=@seo["og:description"]%>'> 
